@@ -15,6 +15,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { useWebsites } from "../contexts/WebsiteContext";
@@ -29,7 +30,7 @@ const statusColors = {
   "Keine Antwort": "default",
 };
 
-const WebsiteCard = ({ website, onEdit, onViewDetails }) => {
+const WebsiteCard = ({ website, onEdit, onViewDetails, onDelete }) => {
   // Datumsformatierung
   const formatDate = (dateString) => {
     if (!dateString) return "-";
@@ -142,13 +143,20 @@ const WebsiteCard = ({ website, onEdit, onViewDetails }) => {
           >
             <EditIcon fontSize="small" />
           </IconButton>
+          <IconButton
+            size="small"
+            onClick={() => onDelete(website)}
+            color="error"
+          >
+            <DeleteIcon fontSize="small" />
+          </IconButton>
         </Box>
       </CardContent>
     </Card>
   );
 };
 
-const ResponsiveWebsiteTable = ({ onEdit, onViewDetails }) => {
+const ResponsiveWebsiteTable = ({ onEdit, onViewDetails, onDelete }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { websites, loading } = useWebsites();
@@ -171,6 +179,7 @@ const ResponsiveWebsiteTable = ({ onEdit, onViewDetails }) => {
               website={website}
               onEdit={onEdit}
               onViewDetails={onViewDetails}
+              onDelete={onDelete}
             />
           ))
         )}
@@ -178,7 +187,13 @@ const ResponsiveWebsiteTable = ({ onEdit, onViewDetails }) => {
     );
   }
 
-  return <WebsiteTable onEdit={onEdit} onViewDetails={onViewDetails} />;
+  return (
+    <WebsiteTable
+      onEdit={onEdit}
+      onViewDetails={onViewDetails}
+      onDelete={onDelete}
+    />
+  );
 };
 
 export default ResponsiveWebsiteTable;

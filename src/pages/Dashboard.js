@@ -15,6 +15,7 @@ import ResponsiveWebsiteTable from "../components/ResponsiveWebsiteTable";
 import FinancialSummary from "../components/FinancialSummary";
 import EditWebsiteDialog from "../components/EditWebsiteDialog";
 import WebsiteDetailsDialog from "../components/WebsiteDetailsDialog";
+import DeleteWebsiteDialog from "../components/DeleteWebsiteDialog";
 import MobileHeader from "../components/MobileHeader";
 
 function Dashboard() {
@@ -22,6 +23,7 @@ function Dashboard() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [detailsDialogOpen, setDetailsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedWebsite, setSelectedWebsite] = useState(null);
 
   const handleAddWebsite = () => {
@@ -37,6 +39,11 @@ function Dashboard() {
   const handleViewDetails = (website) => {
     setSelectedWebsite(website);
     setDetailsDialogOpen(true);
+  };
+
+  const handleDeleteWebsite = (website) => {
+    setSelectedWebsite(website);
+    setDeleteDialogOpen(true);
   };
 
   return (
@@ -99,6 +106,7 @@ function Dashboard() {
               <ResponsiveWebsiteTable
                 onEdit={handleEditWebsite}
                 onViewDetails={handleViewDetails}
+                onDelete={handleDeleteWebsite}
               />
             </Box>
           </Paper>
@@ -122,6 +130,12 @@ function Dashboard() {
           open={detailsDialogOpen}
           website={selectedWebsite}
           onClose={() => setDetailsDialogOpen(false)}
+        />
+
+        <DeleteWebsiteDialog
+          open={deleteDialogOpen}
+          website={selectedWebsite}
+          onClose={() => setDeleteDialogOpen(false)}
         />
       </Container>
     </>

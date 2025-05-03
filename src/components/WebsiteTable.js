@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from "date-fns";
 import { de } from "date-fns/locale";
 import { useWebsites } from "../contexts/WebsiteContext";
@@ -29,7 +30,7 @@ const statusColors = {
   "Keine Antwort": "default",
 };
 
-const WebsiteTable = ({ onEdit, onViewDetails }) => {
+const WebsiteTable = ({ onEdit, onViewDetails, onDelete }) => {
   const { websites, loading } = useWebsites();
 
   // Datumsformatierung
@@ -128,6 +129,13 @@ const WebsiteTable = ({ onEdit, onViewDetails }) => {
                       color="primary"
                     >
                       <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => onDelete(website)}
+                      color="error"
+                    >
+                      <DeleteIcon fontSize="small" />
                     </IconButton>
                   </Box>
                 </TableCell>
